@@ -39,24 +39,26 @@
       position: fixed;
       width: 10px;
       height: 10px;
-      background: var(--cream);
+      background: var(--ink);
       border-radius: 50%;
       pointer-events: none;
       z-index: 9999;
-      transition: transform 0.15s, opacity 0.15s;
+      transition: transform 0.15s, opacity 0.15s, background 0.3s;
       transform: translate(-50%, -50%);
+      mix-blend-mode: exclusion;
     }
 
     .cursor-ring {
       position: fixed;
       width: 36px;
       height: 36px;
-      border: 1px solid rgba(242, 237, 228, 0.4);
+      border: 1px solid rgba(28, 27, 24, 0.4);
       border-radius: 50%;
       pointer-events: none;
       z-index: 9998;
-      transition: transform 0.08s, width 0.2s, height 0.2s, opacity 0.2s;
+      transition: transform 0.08s, width 0.2s, height 0.2s, opacity 0.2s, border-color 0.3s;
       transform: translate(-50%, -50%);
+      mix-blend-mode: exclusion;
     }
 
     /* ── Nav ── */
@@ -71,6 +73,13 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      transition: background 0.3s, padding 0.3s, box-shadow 0.3s;
+    }
+
+    nav.scrolled {
+      background: var(--cream);
+      padding: 1rem 3rem;
+      box-shadow: 0 1px 8px rgba(28, 27, 24, 0.08);
     }
 
     .nav-name {
@@ -79,6 +88,11 @@
       letter-spacing: 0.2em;
       text-transform: uppercase;
       color: rgba(242, 237, 228, 0.5);
+      transition: color 0.3s;
+    }
+
+    nav.scrolled .nav-name {
+      color: var(--ink);
     }
 
     .nav-links {
@@ -99,6 +113,14 @@
 
     .nav-links a:hover {
       color: var(--cream);
+    }
+
+    nav.scrolled .nav-links a {
+      color: rgba(28, 27, 24, 0.5);
+    }
+
+    nav.scrolled .nav-links a:hover {
+      color: var(--ink);
     }
 
     /* ── Hero ── */
@@ -815,6 +837,10 @@
         padding: 1.5rem;
       }
 
+      nav.scrolled {
+        padding: 1rem 1.5rem;
+      }
+
       .nav-links {
         display: none;
       }
@@ -966,7 +992,7 @@
         <p>I started at <strong>AutoZone</strong> &mdash; six years doing research, catalog analysis, and business intelligence for their merchandising team. That's where I learned that understanding the business problem is more important than any technology.</p>
         <p>From there I worked at <strong>Siemens Healthineers</strong> in California, and at <strong>Xapo Bank</strong> &mdash; the fintech founded by <strong>Wences Casares</strong> &mdash; where I was part of the team that helped turn a startup into a licensed international bank. For the last six years I've been working with <strong>Sean Parker</strong>'s companies, Aircore and Cantina Labs, building real-time social platforms out of New York and California.</p>
         <p>I've also built products of my own. Not as a side project &mdash; as a natural extension of what I do. When I see a problem worth solving, I build the solution. Livora and El Marshal exist because of that instinct.</p>
-        <p>I have a Master's degree in <strong>Gestalt Psychotherapy</strong>. It sounds unrelated &mdash; it isn't. Understanding how people think, where they get stuck, and what they actually need is half of what makes good software.</p>
+        <p>I also have a Master's degree in <strong>Psychotherapy</strong>. Understanding how people think, where they get stuck, and what they actually need has made me a better builder.</p>
       </div>
     </div>
   </section>
@@ -1110,6 +1136,11 @@
   </footer>
 
   <script>
+    const navEl = document.querySelector('nav');
+    window.addEventListener('scroll', () => {
+      navEl.classList.toggle('scrolled', window.scrollY > 80);
+    });
+
     const cur = document.getElementById('cur');
     const ring = document.getElementById('ring');
     let mx = 0, my = 0, rx = 0, ry = 0;
